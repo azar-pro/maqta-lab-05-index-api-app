@@ -20,6 +20,15 @@ jobs:
         run: npm test
       - name: Production build
         run: npm run build
+      - name: Open Library live smoke signal
+        continue-on-error: true
+        run: curl --retry 2 --retry-delay 2 --max-time 12 --fail --silent --show-error 'https://openlibrary.org/search.json?q=design&limit=1' >/dev/null
+      - name: Upload verified production bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-production
+          path: dist
+          if-no-files-found: error
       - name: Install browser QA driver
         run: npm install --no-save puppeteer-core@latest
       - name: Browser QA
