@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc -b && vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run"
   },
@@ -16,10 +16,10 @@
   },
   "devDependencies": {
     "@types/node": "latest",
-    "typescript": "latest",
+    "typescript": "6.0.3",
     "vite": "latest",
     "vitest": "latest",
-    "vue-tsc": "latest"
+    "vue-tsc": "3.3.11"
   },
   "engines": {
     "node": ">=22.22.3"
