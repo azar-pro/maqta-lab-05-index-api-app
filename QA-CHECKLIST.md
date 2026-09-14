@@ -1,6 +1,6 @@
 # INDEX — QA Checklist
 
-Verified against the current Vue production build through GitHub Actions, Vitest and Puppeteer browser QA.
+Verified against the current Vue production build through GitHub Actions, Vitest, Puppeteer browser QA, and the live Vercel deployment.
 
 ## Build
 - [x] `npm install` completes
@@ -42,7 +42,7 @@ Verified against the current Vue production build through GitHub Actions, Vitest
 - [x] Save persists to localStorage in browser QA
 - [x] Saved page renders current collection
 - [x] Vue catch-all route redirects unknown in-app routes to `/`
-- [ ] Final public-host deep-link/reload behavior verified
+- [x] Public deep-link to `/book/:id` verified on Vercel without a 404
 
 ## Responsive / visual
 - [x] 1440px desktop browser QA
@@ -77,11 +77,11 @@ Verified against the current Vue production build through GitHub Actions, Vitest
 - [x] GitHub source verified
 - [x] CI production artifact preserved
 - [x] Portfolio case study prepared
-- [ ] Public Vercel URL independently verified
-- [ ] Final public-host deep-link/reload test
+- [x] Public Vercel URL independently verified
+- [x] Public deep-link tested successfully
 
 ## Release status
 
-**Sprint 02 code, tests, production build, API smoke signal, responsive browser QA and release artifacts: PASS.**
+**PROJECT 05 — INDEX: COMPLETE.**
 
-**Public-host verification remains the final release gate.**
+Production URL: https://index-book-discovery-meryf2026-1383.vercel.app
