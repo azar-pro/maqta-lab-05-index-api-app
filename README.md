@@ -1,5 +1,7 @@
 # INDEX — Book Discovery Workspace
 
+![CI](https://github.com/azar-pro/maqta-lab-05-index-api-app/actions/workflows/ci.yml/badge.svg)
+
 MAQTA Lab Project 05. A real API-driven discovery product using Open Library Search, Work, Author and Covers APIs.
 
 ## Sprint 01 scope
