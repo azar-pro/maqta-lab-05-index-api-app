@@ -2,7 +2,9 @@
 
 ![CI](https://github.com/azar-pro/maqta-lab-05-index-api-app/actions/workflows/ci.yml/badge.svg)
 
-**MAQTA Lab Project 05** — a portfolio-grade API-driven discovery product built with Vue 3, TypeScript and the Open Library APIs.
+**MAQTA Lab Project 05 — COMPLETE** — a portfolio-grade API-driven discovery product built with Vue 3, TypeScript and the Open Library APIs.
+
+**Live:** https://index-book-discovery-meryf2026-1383.vercel.app
 
 INDEX treats book search as a calm research workspace rather than a generic card catalogue: users can search millions of works, preserve filters in the URL, inspect work/author data and keep a local reading shortlist.
 
@@ -35,9 +37,9 @@ INDEX treats book search as a calm research workspace rather than a generic card
 - GitHub Actions
 - Open Library Search / Works / Authors / Covers APIs
 
-## Verified Sprint 02 status
+## Verified release status
 
-Verified on GitHub Actions with Node **22.22.3**.
+Verified on GitHub Actions with Node **22.22.3** and confirmed on the live Vercel production deployment.
 
 - ✅ Dependency install — **0 vulnerabilities**
 - ✅ Unit tests — **7/7 passing**
@@ -55,6 +57,9 @@ Verified on GitHub Actions with Node **22.22.3**.
 - ✅ Author data contract renders
 - ✅ Browser report — **0 console errors, 0 page errors, 0 request failures**
 - ✅ Verified production `dist` preserved as a CI artifact
+- ✅ Vercel production URL opened successfully
+- ✅ Direct deep-link to `/book/:id` verified in production without a 404
+- ✅ Real Open Library cover, work, author, description and subject data rendered on the live site
 
 ### Production bundle
 
