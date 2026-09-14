@@ -18,3 +18,19 @@ jobs:
         run: npm install
       - name: Production build
         run: npm run build
+      - name: Install browser QA driver
+        run: npm install --no-save puppeteer-core@latest
+      - name: Browser QA
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory dist >/tmp/index-http.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill $SERVER_PID || true' EXIT
+          sleep 1
+          CHROME_BIN=/usr/bin/google-chrome QA_BASE_URL=http://127.0.0.1:4173/ node .github/scripts/browser-qa.mjs
+      - name: Upload browser QA evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: index-browser-qa
+          path: qa
+          if-no-files-found: warn
