@@ -4,49 +4,76 @@ import { useRoute, useRouter } from 'vue-router';
 import BookCard from '../components/BookCard.vue';
 import BookSkeleton from '../components/BookSkeleton.vue';
 import { searchBooks } from '../services/openLibrary';
+import { normalizeSearchState, serializeSearchState, type LanguageCode, type SortMode } from '../services/searchState';
 import type { SearchDoc } from '../types/open-library';
 
-const route = useRoute(); const router = useRouter();
+const route = useRoute();
+const router = useRouter();
 const query = ref('design');
-const language = ref('');
-const sort = ref('relevance');
+const language = ref<LanguageCode>('');
+const sort = ref<SortMode>('relevance');
 const page = ref(1);
-const books = ref<SearchDoc[]>([]); const total = ref(0); const loading = ref(false); const error = ref('');
+const books = ref<SearchDoc[]>([]);
+const total = ref(0);
+const loading = ref(false);
+const error = ref('');
 let controller: AbortController | undefined;
+
 const pageCount = computed(() => Math.max(1, Math.ceil(total.value / 18)));
 const resultLabel = computed(() => loading.value ? 'Searching the catalogue…' : `${total.value.toLocaleString()} works found`);
 
 async function load() {
-  controller?.abort(); controller = new AbortController(); loading.value = true; error.value = '';
+  controller?.abort();
+  const current = new AbortController();
+  controller = current;
+  loading.value = true;
+  error.value = '';
   try {
-    const data = await searchBooks({ q: query.value.trim() || 'design', page: page.value, limit: 18, sort: sort.value as 'relevance'|'new'|'old', language: language.value || undefined, signal: controller.signal });
-    books.value = data.docs; total.value = data.numFound;
+    const data = await searchBooks({
+      q: query.value.trim() || 'design',
+      page: page.value,
+      limit: 18,
+      sort: sort.value,
+      language: language.value || undefined,
+      signal: current.signal
+    });
+    if (current.signal.aborted) return;
+    books.value = data.docs;
+    total.value = data.numFound;
+
+    const maxPage = Math.max(1, Math.ceil(data.numFound / 18));
+    if (page.value > maxPage) {
+      await router.replace({ query: serializeSearchState({ q: query.value, lang: language.value, sort: sort.value, page: maxPage }) });
+    }
   } catch (e) {
-    if ((e as Error).name !== 'AbortError') error.value = 'The catalogue could not be reached. Try again.';
-  } finally { loading.value = false; }
+    if ((e as Error).name !== 'AbortError' && !current.signal.aborted) {
+      error.value = 'The catalogue could not be reached. Try again.';
+    }
+  } finally {
+    if (controller === current) loading.value = false;
+  }
 }
-function routeQuery(nextPage = 1) {
-  return {
-    q: query.value || undefined,
-    lang: language.value || undefined,
-    sort: sort.value !== 'relevance' ? sort.value : undefined,
-    page: nextPage > 1 ? String(nextPage) : undefined
-  };
+
+function currentState(nextPage = page.value) {
+  return { q: query.value.trim() || 'design', lang: language.value, sort: sort.value, page: nextPage };
 }
-function submit() { router.push({ query: routeQuery(1) }); }
-function changeFilters() { router.push({ query: routeQuery(1) }); }
+function submit() { router.push({ query: serializeSearchState(currentState(1)) }); }
+function changeFilters() { router.push({ query: serializeSearchState(currentState(1)) }); }
 function go(next: number) {
-  const target = Math.min(Math.max(next,1), pageCount.value);
-  router.push({ query: routeQuery(target) });
-  window.scrollTo({top:0,behavior:'smooth'});
+  const target = Math.min(Math.max(next, 1), pageCount.value);
+  router.push({ query: serializeSearchState(currentState(target)) });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+
 watch(() => route.query, () => {
-  query.value = String(route.query.q || 'design');
-  language.value = String(route.query.lang || '');
-  sort.value = String(route.query.sort || 'relevance');
-  page.value = Math.max(1, Number(route.query.page || 1));
+  const normalized = normalizeSearchState(route.query as Record<string, unknown>);
+  query.value = normalized.q;
+  language.value = normalized.lang;
+  sort.value = normalized.sort;
+  page.value = normalized.page;
   load();
 }, { deep: true, immediate: true });
+
 onBeforeUnmount(() => controller?.abort());
 </script>
 
