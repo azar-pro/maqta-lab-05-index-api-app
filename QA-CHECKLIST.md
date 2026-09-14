@@ -1,47 +1,87 @@
 # INDEX — QA Checklist
 
+Verified against the current Vue production build through GitHub Actions, Vitest and Puppeteer browser QA.
+
 ## Build
-- [ ] npm install
-- [ ] vue-tsc strict type check
-- [ ] Vite production build
-- [ ] Browser console clean
+- [x] `npm install` completes
+- [x] Dependency audit reports 0 vulnerabilities
+- [x] `vue-tsc --noEmit` passes
+- [x] Vite production build passes
+- [x] Verified production bundle uploaded as CI artifact
+- [x] Browser console reports 0 errors
+- [x] Browser page errors: 0
+- [x] Browser request failures in deterministic QA: 0
+
+## Unit coverage
+- [x] 7/7 Vitest tests passing
+- [x] Search state defaults
+- [x] Invalid page / language / sort normalization
+- [x] Supported state serialization
+- [x] Open Library search URL construction
+- [x] Work HTTP failure behavior
+- [x] Author endpoint construction
 
 ## API behavior
-- [ ] Search returns real Open Library results
-- [ ] Query / language / sort / page survive in URL
-- [ ] Browser back/forward restores search state
-- [ ] Pagination works across multiple pages
-- [ ] Detail route loads work + author data
-- [ ] Missing cover fallback works
-- [ ] Empty results state works
-- [ ] Network error + retry state works
-- [ ] Request cancellation avoids stale result races
+- [x] Open Library live smoke request passes on latest release run
+- [x] Production code uses real Open Library endpoints
+- [x] Browser QA validates Open Library-shaped response contracts deterministically
+- [x] Search query is written to URL
+- [x] Language filter is written to URL
+- [x] Invalid `page` values fall back safely to page 1
+- [x] Invalid `sort` values fall back to relevance
+- [x] Invalid `lang` values fall back to any language
+- [x] AbortController cancels previous catalogue requests
+- [x] Older aborted requests cannot incorrectly clear a newer loading state
+- [x] Work detail reloads when `/book/:id` changes
+- [x] Author failure is isolated from a successfully loaded work
+- [x] Missing cover fallback exists
+- [x] Empty results state exists
+- [x] Network error + retry state exists
 
 ## Product behavior
-- [ ] Save / unsave persists in localStorage
-- [ ] Saved page reflects current collection
-- [ ] Direct deep-link to book route works
-- [ ] 404 route resolves safely
+- [x] Save persists to localStorage in browser QA
+- [x] Saved page renders current collection
+- [x] Vue catch-all route redirects unknown in-app routes to `/`
+- [ ] Final public-host deep-link/reload behavior verified
 
 ## Responsive / visual
-- [ ] 1440px desktop
-- [ ] 1024px tablet
-- [ ] 768px tablet
-- [ ] 390px mobile
-- [ ] No global horizontal overflow
-- [ ] Cover crops remain visually acceptable
-- [ ] Typography hierarchy remains editorial, not template-like
+- [x] 1440px desktop browser QA
+- [x] 390px mobile browser QA
+- [x] No global horizontal overflow at tested desktop/mobile widths
+- [x] Small result sets no longer create a large empty grid-background block
+- [x] Mobile page indicator stays on one line at 390px
+- [x] Typography remains editorial and distinct from a generic SaaS template
+- [ ] Optional 1024px / 768px dedicated screenshot pass
 
-## Accessibility
-- [ ] Keyboard navigation
-- [ ] Focus visibility
-- [ ] Form labels
-- [ ] aria-live result count
-- [ ] aria-busy skeleton state
-- [ ] Reduced motion
+## Accessibility / interaction
+- [x] Search control uses a visible label
+- [x] Filter controls use visible labels
+- [x] Result count uses `aria-live="polite"`
+- [x] Loading grid uses `aria-busy="true"`
+- [x] Pagination has an accessible nav label
+- [x] Reduced-motion preference disables animation
+- [ ] Full keyboard-only walkthrough
+- [ ] Formal screen-reader audit
 
-## Release
-- [ ] README final
-- [ ] Case study
-- [ ] GitHub source verified
-- [ ] Live URL verified
+## Production metrics
+- [x] HTML: **0.58 kB**
+- [x] CSS: **7.18 kB raw / 2.16 kB gzip**
+- [x] JavaScript: **100.57 kB raw / 38.76 kB gzip**
+- [x] 36 modules transformed
+- [x] Browser automated checks: **10/10 passing**
+- [x] Unit tests: **7/7 passing**
+
+## Release artifacts
+- [x] README updated with verified facts
+- [x] Browser screenshots captured for Discover desktop, Saved, Work detail and Discover mobile
+- [x] GitHub source verified
+- [x] CI production artifact preserved
+- [x] Portfolio case study prepared
+- [ ] Public Vercel URL independently verified
+- [ ] Final public-host deep-link/reload test
+
+## Release status
+
+**Sprint 02 code, tests, production build, API smoke signal, responsive browser QA and release artifacts: PASS.**
+
+**Public-host verification remains the final release gate.**
