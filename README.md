@@ -18,6 +18,8 @@ INDEX treats book search as a calm research workspace rather than a generic card
 - URL-driven query, language, sort and pagination state
 - Back/forward-compatible routing model
 - Saved reading list persisted in `localStorage`
+- Save / remove controls available from both result cards and the work-detail page
+- Saved counter reacts immediately to detail-page changes
 - Abortable requests to prevent stale-result races
 - Loading, empty, error and retry UI states
 - Defensive URL parsing for invalid `page`, `sort` and `lang` values
@@ -46,7 +48,7 @@ Verified on GitHub Actions with Node **22.22.3** and confirmed on the live Verce
 - ✅ `vue-tsc --noEmit`
 - ✅ Vite production build
 - ✅ Open Library live smoke request
-- ✅ Browser QA — **10/10 checks passing**
+- ✅ Browser QA — **15/15 checks passing**
 - ✅ Desktop 1440px — no global overflow
 - ✅ Mobile 390px — no global overflow
 - ✅ Search state written to URL
@@ -55,8 +57,11 @@ Verified on GitHub Actions with Node **22.22.3** and confirmed on the live Verce
 - ✅ Saved collection renders
 - ✅ Work detail contract renders
 - ✅ Author data contract renders
+- ✅ Detail page exposes current saved state
+- ✅ Detail page can remove and re-save a work
+- ✅ Header Saved counter reacts to detail-page save / remove actions
 - ✅ Browser report — **0 console errors, 0 page errors, 0 request failures**
-- ✅ Verified production `dist` preserved as a CI artifact
+- ✅ Verified production `dist` preserved as a CI artifact and published to the `dist` branch
 - ✅ Vercel production URL opened successfully
 - ✅ Direct deep-link to `/book/:id` verified in production without a 404
 - ✅ Real Open Library cover, work, author, description and subject data rendered on the live site
@@ -65,9 +70,9 @@ Verified on GitHub Actions with Node **22.22.3** and confirmed on the live Verce
 
 Latest verified build:
 
-- HTML: **0.58 kB**
-- CSS: **7.18 kB raw / 2.16 kB gzip**
-- JavaScript: **100.57 kB raw / 38.76 kB gzip**
+- HTML: **0.58 kB raw / 0.38 kB gzip**
+- CSS: **7.63 kB raw / 2.27 kB gzip**
+- JavaScript: **101.23 kB raw / 38.96 kB gzip**
 - Modules transformed: **36**
 
 ## QA architecture
