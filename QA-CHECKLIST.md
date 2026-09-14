@@ -8,6 +8,7 @@ Verified against the current Vue production build through GitHub Actions, Vitest
 - [x] `vue-tsc --noEmit` passes
 - [x] Vite production build passes
 - [x] Verified production bundle uploaded as CI artifact
+- [x] Verified production bundle published to the `dist` branch
 - [x] Browser console reports 0 errors
 - [x] Browser page errors: 0
 - [x] Browser request failures in deterministic QA: 0
@@ -41,6 +42,11 @@ Verified against the current Vue production build through GitHub Actions, Vitest
 ## Product behavior
 - [x] Save persists to localStorage in browser QA
 - [x] Saved page renders current collection
+- [x] Work-detail page exposes current saved state
+- [x] Work-detail page can remove a saved book
+- [x] Header Saved counter reacts immediately to detail removal
+- [x] Work-detail page can save the book again
+- [x] Header Saved counter reacts immediately to detail save
 - [x] Vue catch-all route redirects unknown in-app routes to `/`
 - [x] Public deep-link to `/book/:id` verified on Vercel without a 404
 
@@ -59,16 +65,17 @@ Verified against the current Vue production build through GitHub Actions, Vitest
 - [x] Result count uses `aria-live="polite"`
 - [x] Loading grid uses `aria-busy="true"`
 - [x] Pagination has an accessible nav label
+- [x] Detail save button exposes `aria-pressed`
 - [x] Reduced-motion preference disables animation
 - [ ] Full keyboard-only walkthrough
 - [ ] Formal screen-reader audit
 
 ## Production metrics
-- [x] HTML: **0.58 kB**
-- [x] CSS: **7.18 kB raw / 2.16 kB gzip**
-- [x] JavaScript: **100.57 kB raw / 38.76 kB gzip**
+- [x] HTML: **0.58 kB raw / 0.38 kB gzip**
+- [x] CSS: **7.63 kB raw / 2.27 kB gzip**
+- [x] JavaScript: **101.23 kB raw / 38.96 kB gzip**
 - [x] 36 modules transformed
-- [x] Browser automated checks: **10/10 passing**
+- [x] Browser automated checks: **15/15 passing**
 - [x] Unit tests: **7/7 passing**
 
 ## Release artifacts
@@ -76,9 +83,11 @@ Verified against the current Vue production build through GitHub Actions, Vitest
 - [x] Browser screenshots captured for Discover desktop, Saved, Work detail and Discover mobile
 - [x] GitHub source verified
 - [x] CI production artifact preserved
+- [x] Verified production bundle published to `dist`
 - [x] Portfolio case study prepared
 - [x] Public Vercel URL independently verified
 - [x] Public deep-link tested successfully
+- [x] Detail save / remove flow manually confirmed on the live site
 
 ## Release status
 
