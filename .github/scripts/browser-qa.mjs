@@ -101,6 +101,13 @@ try {
   await page.waitForSelector('.book-detail', { timeout: 10000 });
   await check('work detail loads from API contract', async () => (await page.$eval('.book-detail h1', el => el.textContent?.trim())) === 'The Architecture of Form');
   await check('author request is rendered', async () => (await page.$eval('.author-block strong', el => el.textContent?.trim())) === 'Ada North');
+  await check('detail view exposes saved state', async () => (await page.$eval('.detail-save', el => el.textContent?.trim())) === 'Remove from saved');
+  await page.click('.detail-save');
+  await check('detail view can remove saved book', async () => page.evaluate(() => JSON.parse(localStorage.getItem('index-saved-books') || '[]').length === 0));
+  await check('saved counter reacts to detail removal', async () => (await page.$eval('.site-header .count', el => el.textContent?.trim())) === '0');
+  await page.click('.detail-save');
+  await check('detail view can save book again', async () => page.evaluate(() => JSON.parse(localStorage.getItem('index-saved-books') || '[]').length === 1));
+  await check('saved counter reacts to detail save', async () => (await page.$eval('.site-header .count', el => el.textContent?.trim())) === '1');
   await page.screenshot({ path: 'qa/screenshots/03-book-detail-desktop.png', fullPage: true });
 
   const mobile = await browser.newPage();
