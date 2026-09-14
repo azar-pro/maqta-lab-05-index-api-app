@@ -1,0 +1,1 @@
+<template><article class="book-card skeleton-card"><div class="skeleton cover-skeleton"></div><div class="book-meta"><div class="skeleton line tiny"></div><div class="skeleton line"></div><div class="skeleton line short"></div><div class="skeleton line tiny"></div></div></article></template>
