@@ -53,6 +53,7 @@ jobs:
         run: |
           mkdir -p /tmp/index-dist
           cp -R dist/. /tmp/index-dist/
+          cp qa/screenshots/01-discover-desktop.png /tmp/index-dist/portfolio-preview.png
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout --orphan dist
